@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous")
+        link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+        style
+            include style.css
+        title Waiting for payment in XMR
+    body
+        div.container
+            div.row.justify-content-center
+                div.col-8(style='text-align: center')
+                    h5#greeting Hallo #{name}, bitte sende deinen Betrag an folgendes Monero Wallet:
+            div.row.justify-content-center
+                div.col-8(style='text-align: center')
+                    img.img-fluid(src='' + qrcode width="270" height="270")
+            div.row.justify-content-center
+                div.col-8(style='text-align: center')
+                    input.form-control(type='text', value=subaddress readonly)
+            div.row.justify-content-center
+                div.col-8#message-block(style='text-align: center')
+                    h6 Deine Nachricht lautet:
+                    p #{message}
+            div.row.justify-content-center
+                div.col-8#waiting-for-payment-block(style='text-align: center')
+        include footer.pug
