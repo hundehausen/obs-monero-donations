@@ -124,7 +124,6 @@ async function mainFunction() {
       var confirmations_old = 0;
       var checkConfirmations = setInterval(
         async () => {
-          console.log('checkConfirmations() aufgerufen');
           let payments = await walletRpc.getTransfers({
             IsIncoming: true,
             address: subaddress,
@@ -141,7 +140,7 @@ async function mainFunction() {
             }
           }
         },
-        5000,
+        10000,
         subaddress
       );
     }
