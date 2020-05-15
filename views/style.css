@@ -1,4 +1,4 @@
-#greeting {
+#greeting, #eingabe {
   margin-top: 2rem;
 }
 
@@ -6,28 +6,32 @@
   margin-top: 1.5rem;
 }
 
-#eingabe {
-  margin-top: 2rem;
+#heading, #waiting-for-payment-block {
+  margin-top: 1.5rem;
 }
 
-#payment-recieved {
+.payment-recieved {
   display: none;
 }
 
-#heading {
-  margin-top: 1.5rem;
-}
-
-#waiting-for-payment-block {
-  margin-top: 1.5rem;
-}
-
-.fab {
+.fab, .fas {
   font-size: 5rem;
 }
 
 .container {
   margin-top: 2rem;
+}
+
+.fa-check-circle {
+  color: green;
+}
+
+.fa-monero {
+  color: #ff6600;
+}
+
+.fa-twitch {
+  color: #9147fe;
 }
 
 input {

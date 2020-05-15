@@ -25,11 +25,14 @@ html(lang="en")
                 div#waiting-for-payment-block.row.justify-content-center
                     div.col-8(style='text-align: center')
                         h5 Waiting for Payment...
-            div#payment-recieved.row.justify-content-center(style='text-align: center')
+            div.payment-recieved.row.justify-content-center(style='text-align: center')
+                div.col-8(style='text-align: center')
+                    i.fas.fa-check-circle
+            div.payment-recieved.row.justify-content-center(style='text-align: center')
                 div.col-8(style='text-align: center')
                     h5#bestaetigung
             div.row.justify-content-center  
-                div.col-8#message-block(style='text-align: center')
+                div.col-8(style='text-align: center')
                     h5#confirmations 0/10 confirmations
             div.row.justify-content-center  
                 div.col-8#message-block(style='text-align: center')
