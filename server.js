@@ -54,6 +54,7 @@ async function mainFunction() {
     console.log('User connected');
     socket.on('disconnect', () => {
       console.log('user disconnected');
+
     });
   });
 
@@ -91,8 +92,10 @@ async function mainFunction() {
 
       var checkForPayment = setInterval(
         async () => {
-          let transferQuery = new MoneroTransferQuery().setIsIncoming(true);
-          let payments = await walletRpc.getTransfers(transferQuery);
+          let payments = await walletRpc.getTransfers({
+            IsIncoming: true,
+            address: subaddress,
+          });
 
           for (var payment of payments) {
             if (payment.state.address == subaddress) {
@@ -103,7 +106,7 @@ async function mainFunction() {
                 " XMR from: " +
                 subaddress
               );
-              console.dir(payment, { depth: null });
+              //console.dir(payment, { depth: null });
               clearInterval(checkForPayment);
               next();
             } else {
@@ -118,18 +121,27 @@ async function mainFunction() {
     function (req, res) {
       io.emit('payment_recieved', (amount / Math.pow(10, 12)), name);
 
+      var confirmations_old = 0;
       var checkConfirmations = setInterval(
         async () => {
-          let transferQuery = new MoneroTransferQuery().setIsIncoming(true);
-          let payments = await walletRpc.getTransfers(transferQuery);
+          console.log('checkConfirmations() aufgerufen');
+          let payments = await walletRpc.getTransfers({
+            IsIncoming: true,
+            address: subaddress,
+          });
 
           for (var payment of payments) {
             if (payment.state.address == subaddress) {
-              confirmations = await payment.state.numConfirmations;
+              var confirmations_new = await payment.state.tx.state.numConfirmations;
+              if (confirmations_new > confirmations_old) {
+                confirmations_old = confirmations_new;
+                console.log('New confirmation:', confirmations_new);
+                io.emit('confirmations', confirmations_new);
+              }
             }
           }
         },
-        1000,
+        5000,
         subaddress
       );
     }
