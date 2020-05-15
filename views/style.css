@@ -3,5 +3,34 @@
 }
 
 #message-block {
+  margin-top: 1.5rem;
+}
+
+#eingabe {
   margin-top: 2rem;
+}
+
+#payment-recieved {
+  display: none;
+}
+
+#heading {
+  margin-top: 1.5rem;
+}
+
+#waiting-for-payment-block {
+  margin-top: 1.5rem;
+}
+
+.fab {
+  font-size: 5rem;
+}
+
+.container {
+  margin-top: 2rem;
+}
+
+input {
+  max-width: 60%;
+  margin: auto;
 }

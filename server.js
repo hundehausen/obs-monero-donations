@@ -2,13 +2,17 @@ require("monero-javascript");
 var qrcode = require("qrcode-generator"); //https://www.npmjs.com/package/qrcode-generator
 var express = require("express");
 const bodyParser = require("body-parser");
-const util = require("util");
 var app = express();
+
 app.set("view engine", "pug");
 var server = require("http").createServer(app);
+var io = require('socket.io')(server);
 var port = 3000;
+
 let walletName = "testwallet";
 let walletPassword = "abc";
+
+var name, message, subaddress, amount;
 
 mainFunction();
 
@@ -46,58 +50,89 @@ async function mainFunction() {
     console.log(`Express running on port ${server.address().port}`);
   });
 
+  io.on('connection', (socket) => {
+    console.log('User connected');
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+  });
+
   app.get("/", function (req, res) {
     res.render("index", {
       title: "Twitch Donation",
     });
   });
 
-  var name, message;
+
 
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.post("/submit", async function (req, res) {
-    name = req.body.name;
-    message = req.body.message;
+  app.post(
+    "/payment",
+    async function (req, res, next) {
+      name = req.body.name;
+      message = req.body.message;
 
-    let subaddress = await generateNewSubaddress(name + " - " + message);
+      subaddress = await generateNewSubaddress(name + " - " + message);
 
-    var typeNumber = 0;
-    var errorCorrectionLevel = "L";
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData(await subaddress);
-    await qr.make();
-    let qrcodeURL = await qr.createDataURL(6);
+      // QR Code generieren
+      var typeNumber = 0;
+      var errorCorrectionLevel = "L";
+      var qr = qrcode(typeNumber, errorCorrectionLevel);
+      qr.addData(await subaddress);
+      await qr.make();
+      let qrcodeURL = await qr.createDataURL(6);
 
-    res.render("waiting-for-payment", {
-      subaddress: subaddress,
-      qrcode: qrcodeURL,
-      name: name,
-      message: message,
-    });
+      res.render("payment", {
+        subaddress: subaddress,
+        qrcode: qrcodeURL,
+        name: name,
+        message: message,
+      });
 
-    var checkForPayment = setInterval(
-      async () => {
-        let transferQuery = new MoneroTransferQuery().setIsIncoming(true);
-        let payments = await walletRpc.getTransfers(transferQuery);
+      var checkForPayment = setInterval(
+        async () => {
+          let transferQuery = new MoneroTransferQuery().setIsIncoming(true);
+          let payments = await walletRpc.getTransfers(transferQuery);
 
-        for (var payment of payments) {
-          //console.dir(payment.state);
-
-          if (payment.state.address == subaddress) {
-            console.log(
-              "Transaction incoming: " +
-                (await payment.state.amount) / Math.pow(10, 12) +
+          for (var payment of payments) {
+            if (payment.state.address == subaddress) {
+              amount = await payment.state.amount;
+              console.log(
+                "Transaction incoming: " +
+                (await amount) / Math.pow(10, 12) +
                 " XMR from: " +
                 subaddress
-            );
-            clearInterval(checkForPayment);
-          } else {
-            console.log("No Payment recieved");
+              );
+              console.dir(payment, { depth: null });
+              clearInterval(checkForPayment);
+              next();
+            } else {
+              console.log("No Payment recieved");
+            }
           }
-        }
-      },
-      1000,
-      subaddress
-    );
-  });
+        },
+        1000,
+        subaddress
+      );
+    },
+    function (req, res) {
+      io.emit('payment_recieved', (amount / Math.pow(10, 12)), name);
+
+      var checkConfirmations = setInterval(
+        async () => {
+          let transferQuery = new MoneroTransferQuery().setIsIncoming(true);
+          let payments = await walletRpc.getTransfers(transferQuery);
+
+          for (var payment of payments) {
+            if (payment.state.address == subaddress) {
+              confirmations = await payment.state.numConfirmations;
+            }
+          }
+        },
+        1000,
+        subaddress
+      );
+    }
+  );
 }
+

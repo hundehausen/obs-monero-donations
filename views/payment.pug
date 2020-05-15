@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous")
+        link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js")
+        style
+            include style.css
+        title Waiting for payment in XMR
+    body
+        div.container
+            div#payment-processing
+                div.row.justify-content-center
+                    div.col-8(style='text-align: center')
+                        h5#greeting Hey #{name}, please send any amount of XMR to this #[strong testnet] wallet:
+                div.row.justify-content-center
+                    div.col-8(style='text-align: center')
+                        img.img-fluid(src='' + qrcode width="270" height="270")
+                div.row.justify-content-center
+                    div.col-8(style='text-align: center')
+                        input.form-control(type='text', value=subaddress readonly)
+                div#waiting-for-payment-block.row.justify-content-center
+                    div.col-8(style='text-align: center')
+                        h5 Waiting for Payment...
+            div#payment-recieved.row.justify-content-center(style='text-align: center')
+                div.col-8(style='text-align: center')
+                    h5#bestaetigung
+            div.row.justify-content-center  
+                div.col-8#message-block(style='text-align: center')
+                    h5 Your message:
+                    p #[em #{message}]
+            
+        include footer.pug
+        script
+            include socket-client.js
