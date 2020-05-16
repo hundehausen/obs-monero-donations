@@ -4,7 +4,7 @@ Accept Monero donations in your twitch or obs live stream. No third parties invo
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Try first on testnet, before using the mainnet.
 
 ### Dependencies and libraries used
 
@@ -35,18 +35,20 @@ git clone https://github.com/hundehausen/twitch-monero.git
 cd twitch-monero
 npm install
 cp .env.example .env
-node server.js
 ```
 
 #### Usage
 
 1. start monerod
 2. start monero-wallet-cli and generate a new wallet
+3. start monero-wallet-rpc
     ```
-    ./monero-wallet-rpc --daemon-address http://localhost:28081 --testnet --rpc-bind-port 28083 --rpc-login user:abc --rpc-ssl disabled --wallet-dir ./
+    ./monero-wallet-rpc --testnet --rpc-bind-port 28083 --rpc-login user:abc --rpc-ssl disabled --wallet-dir ./
     ```
-3. start monero-wallet-rpc 
 4. copy .env.example to .env and edit the config file to your needs
+5. node server.js
+6. now visit http://localhost:3000 to see your donation page, which you should expose to the internet
+7. visit http://localhost:4000/animate to see the animation canvas, that you add to Streamlabs OBS under browser source as input
 
 ## Authors
 
