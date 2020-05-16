@@ -6,6 +6,19 @@ Accept Monero donations in your twitch or obs live stream. No third parties invo
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Dependencies and libraries used
+
+* monero-javascript
+* express
+* pug
+* socket.io
+* qrcode-generator
+* body-parser
+* bootstrap
+* font-awesome
+* jquery
+* dotenv
+
 ### Prerequisites
 
 What things you need to install the software and how to install them
@@ -29,15 +42,3 @@ node server.js
 ## License
 
 This project is licensed under the AGPL-3.0 - see the [LICENSE](LICENSE) file for details
-
-## Dependencies and libraries used
-
-* monero-javascript
-* express
-* pug
-* socket.io
-* qrcode-generator
-* body-parser
-* bootstrap
-* font-awesome
-* jquery

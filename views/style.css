@@ -10,6 +10,17 @@
   margin-top: 1.5rem;
 }
 
+#donation-canvas {
+  font-size: 5rem;
+  color: #49C7AF;
+}
+
+#donation-message {
+  color: white;
+  font-size: 3rem;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
 .payment-recieved {
   display: none;
 }

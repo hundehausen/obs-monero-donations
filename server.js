@@ -1,16 +1,17 @@
 require("monero-javascript");
-var qrcode = require("qrcode-generator"); //https://www.npmjs.com/package/qrcode-generator
+require('dotenv').config()
+var qrcode = require("qrcode-generator");
 var express = require("express");
 const bodyParser = require("body-parser");
 var app = express();
+var admin_app = express();
 
 app.set("view engine", "pug");
+admin_app.set("view engine", "pug");
 var server = require("http").createServer(app);
+var admin_server = require("http").createServer(admin_app);
 var io = require('socket.io')(server);
-var port = 3000;
-
-let walletName = "testwallet";
-let walletPassword = "abc";
+var io2 = require('socket.io')(admin_server);
 
 var name, message, subaddress, amount;
 
@@ -19,7 +20,7 @@ mainFunction();
 async function mainFunction() {
   // connect to a daemon
   let daemon = new MoneroDaemonRpc({
-    uri: "http://localhost:28081",
+    uri: "http://" + process.env.MONERO_DAEMON_RPC_URI + ":" + process.env.MONERO_DAEMON_RPC_PORT,
   });
   let height = await daemon.getHeight();
   console.log("Height:", height);
@@ -32,10 +33,10 @@ async function mainFunction() {
   );
 
   // open a wallet on the server
-  await walletRpc.openWallet(walletName, walletPassword);
+  await walletRpc.openWallet("testwallet", "abc");
   let primaryAddress = await walletRpc.getPrimaryAddress();
   let balance = await walletRpc.getBalance();
-  console.log("Wallet:", walletName);
+  console.log("Wallet:", process.env.WALLET_NAME);
   console.log("Address:", primaryAddress);
   console.log("Balance:", balance / Math.pow(10, 12));
 
@@ -46,8 +47,13 @@ async function mainFunction() {
   }
 
   // Webserver starten
-  server.listen(port, function () {
+  server.listen(process.env.PORT_WEBSERVER, function () {
     console.log(`Express running on port ${server.address().port}`);
+  });
+
+  // Admin Webserver starten
+  admin_server.listen(process.env.PORT_ADMINSERVER, function () {
+    console.log(`Admin Server running on port ${admin_server.address().port}`);
   });
 
   io.on('connection', (socket) => {
@@ -64,7 +70,9 @@ async function mainFunction() {
     });
   });
 
-
+  admin_app.get("/animation", function (req, res) {
+    res.render("animation");
+  });
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.post(
@@ -109,8 +117,6 @@ async function mainFunction() {
               //console.dir(payment, { depth: null });
               clearInterval(checkForPayment);
               next();
-            } else {
-              console.log("No Payment recieved");
             }
           }
         },
@@ -119,8 +125,13 @@ async function mainFunction() {
       );
     },
     function (req, res) {
+      // Send payment recieved with amount to Client
       io.emit('payment_recieved', (amount / Math.pow(10, 12)), name);
 
+      // Generate Animation for OBS
+      io2.emit('new_donation', (amount / Math.pow(10, 12)), name, message);
+
+      // Confirmations
       var confirmations_old = 0;
       var checkConfirmations = setInterval(
         async () => {
