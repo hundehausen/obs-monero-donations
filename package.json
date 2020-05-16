@@ -12,10 +12,16 @@
     "qrcode-generator": "^1.4.4",
     "socket.io": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "minimist": "^1.2.5"
+  },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
   },
   "author": "Grischa Daum",
   "license": "AGPL-3.0"
