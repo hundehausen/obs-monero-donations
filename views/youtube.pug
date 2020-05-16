@@ -25,10 +25,10 @@ html
           form(method='POST', action="/payment")
             div.form-group(style='text-align: center')
               label(for='nameForm') Your name:
-              input.form-control#nameForm(type='text', name='name')
+              input.form-control#nameForm(type='text', name='name', maxlength='50')
             div.form-group(style='text-align: center')
               label(for='messageForm') Your message:
-              input.form-control#messageForm(type='text', name='message')
+              input.form-control#messageForm(type='text', name='message', maxlength='160')
             button.btn.btn-primary(type="submit") Submit
     include footer.pug
     script

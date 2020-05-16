@@ -46,6 +46,17 @@ cp .env.example .env
     ./monero-wallet-rpc --testnet --rpc-bind-port 28083 --rpc-login user:abc --rpc-ssl disabled --wallet-dir ./
     ```
 4. copy .env.example to .env and edit the config file to your needs
+    ```
+    STREAMER_NAME=hundehausen
+    PLATFORM=twitch // choose between twitch and youtube
+    PORT_WEBSERVER=3000
+    PORT_ADMINSERVER=4000
+    WALLET_NAME=testwallet
+    WALLET_PASSWORD=abc
+    MONERO_WALLET_RPC_URI=http://localhost:28083
+    MONERO_WALLET_RPC_USER=user
+    MONERO_WALLET_RPC_PASSWORD=abc
+    ```
 5. node server.js
 6. now visit http://localhost:3000 to see your donation page, which you should expose to the internet
 7. visit http://localhost:4000/animate to see the animation canvas, that you add to Streamlabs OBS under browser source as input
