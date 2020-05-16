@@ -11,13 +11,13 @@
 }
 
 #donation-canvas {
-  font-size: 5rem;
+  font-size: 150rem;
   color: #49C7AF;
 }
 
 #donation-message {
   color: white;
-  font-size: 3rem;
+  font-size: 90rem;
   text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
