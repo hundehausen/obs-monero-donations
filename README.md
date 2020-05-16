@@ -21,10 +21,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to use the software
 
-* Monero CLI Wallet
-* NodeJS
+* [Monero CLI Wallet](https://web.getmonero.org/downloads/#cli)
+* [NodeJS](https://nodejs.org/en/)
+* [Streamlabs OBS](https://streamlabs.com/)
+* Expose the port of your choice to the internet, a reverse proxy might be helpful
 
 ### Installing
 
@@ -32,13 +34,19 @@ What things you need to install the software and how to install them
 git clone https://github.com/hundehausen/twitch-monero.git
 cd twitch-monero
 npm install
+cp .env.example .env
 node server.js
 ```
 
 #### Usage
 
 1. start monerod
-1. copy .env.example to .env and edit the config file to your needs
+2. start monero-wallet-cli and generate a new wallet
+    ```
+    ./monero-wallet-rpc --daemon-address http://localhost:28081 --testnet --rpc-bind-port 28083 --rpc-login user:abc --rpc-ssl disabled --wallet-dir ./
+    ```
+3. start monero-wallet-rpc 
+4. copy .env.example to .env and edit the config file to your needs
 
 ## Authors
 
