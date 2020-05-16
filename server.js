@@ -18,18 +18,12 @@ var name, message, subaddress, amount;
 mainFunction();
 
 async function mainFunction() {
-  // connect to a daemon
-  let daemon = new MoneroDaemonRpc({
-    uri: "http://" + process.env.MONERO_DAEMON_RPC_URI + ":" + process.env.MONERO_DAEMON_RPC_PORT,
-  });
-  let height = await daemon.getHeight();
-  console.log("Height:", height);
 
   // connect to a monero-wallet-rpc endpoint with authentication
   let walletRpc = new MoneroWalletRpc(
-    "http://localhost:28083",
-    "grischa",
-    "abc"
+    process.env.MONERO_WALLET_RPC_URI,
+    process.env.MONERO_WALLET_RPC_USER,
+    process.env.MONERO_WALLET_RPC_PASSWORD
   );
 
   // open a wallet on the server
@@ -37,8 +31,8 @@ async function mainFunction() {
   let primaryAddress = await walletRpc.getPrimaryAddress();
   let balance = await walletRpc.getBalance();
   console.log("Wallet:", process.env.WALLET_NAME);
-  console.log("Address:", primaryAddress);
-  console.log("Balance:", balance / Math.pow(10, 12));
+  console.log("Primary address:", primaryAddress);
+  console.log("Balance:" + (balance / Math.pow(10, 12)) + " XMR");
 
   async function generateNewSubaddress(label) {
     let subaddress = await walletRpc.createSubaddress(0, label);
@@ -46,12 +40,12 @@ async function mainFunction() {
     return await subaddress.state.address;
   }
 
-  // Webserver starten
+  // starting webserver
   server.listen(process.env.PORT_WEBSERVER, function () {
     console.log(`Express running on port ${server.address().port}`);
   });
 
-  // Admin Webserver starten
+  // starting admin webserver
   admin_server.listen(process.env.PORT_ADMINSERVER, function () {
     console.log(`Admin Server running on port ${admin_server.address().port}`);
   });
@@ -65,8 +59,10 @@ async function mainFunction() {
   });
 
   app.get("/", function (req, res) {
-    res.render("index", {
-      title: "Twitch Donation",
+    res.render(process.env.PLATFORM, {
+      title: "Donate to your favorite Streamer with Monero",
+      streamerName: process.env.STREAMER_NAME,
+      platform: process.env.PLATFORM
     });
   });
 

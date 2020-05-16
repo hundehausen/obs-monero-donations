@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous")
+    link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js")
+    title #{title}
+    style
+            include style.css
+  body
+    div.container
+      div#logos.row.justify-content-center
+        div.col(style='text-align: center')
+          i.fab.fa-youtube.float-right
+        div.col(style='text-align: center')
+          i.fab.fa-monero.float-left
+      div#heading.row.justify-content-center
+        div.col(style='text-align: center')
+          h2 Donate to #{streamerName} with Monero
+      div.row.justify-content-center
+        div#eingabe.col-8(style='text-align: center')
+          form(method='POST', action="/payment")
+            div.form-group(style='text-align: center')
+              label(for='nameForm') Your name:
+              input.form-control#nameForm(type='text', name='name')
+            div.form-group(style='text-align: center')
+              label(for='messageForm') Your message:
+              input.form-control#messageForm(type='text', name='message')
+            button.btn.btn-primary(type="submit") Submit
+    include footer.pug
+    script
+      include socket-client.js

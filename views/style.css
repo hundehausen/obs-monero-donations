@@ -45,6 +45,10 @@
   color: #9147fe;
 }
 
+.fa-youtube {
+  color: #FF0000;
+}
+
 input {
   max-width: 60%;
   margin: auto;

@@ -35,6 +35,11 @@ npm install
 node server.js
 ```
 
+#### Usage
+
+1. start monerod
+1. copy .env.example to .env and edit the config file to your needs
+
 ## Authors
 
 * **Grischa Daum**
