@@ -61,6 +61,10 @@ cp .env.example .env
 6. now visit http://localhost:3000 to see your donation page, which you should expose to the internet
 7. visit http://localhost:4000/animate to see the animation canvas, that you add to Streamlabs OBS under browser source as input
 
+## Known bugs
+
+* the animation page uses extremly huge font sizes, I could not get it any bigger with Streamlabs OBS. If it had normal sizes of h1 and h3, I could only see some pixels
+
 ## Authors
 
 * **Grischa Daum**
