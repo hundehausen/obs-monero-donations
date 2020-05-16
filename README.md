@@ -1,6 +1,6 @@
 # Monero Twitch
 
-Accept Monero donations in your twitch or obs live stream. No third parties involved. Your wallet, your webserver, your monero deamon.
+Accept Monero donations in your OBS live stream. No third parties involved. Your wallet, your webserver, your stream.
 
 ## Getting Started
 
@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 * body-parser
 * bootstrap
 * font-awesome
-* jquery
+* jQuery
 * dotenv
 
 ### Prerequisites
