@@ -8,15 +8,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Demo
 
-1)
-
-![Alt text](/demo/user_input.png?raw=true "User Input")
-2)
-
-![Alt text](/demo/waiting.png?raw=true "Waiting")
-3)
-
-![Alt text](/demo/confirmations.png?raw=true "Confirmations")
+![User Input](/demo/user_input.png?raw=true "User Input") 
+![Waiting for payment](/demo/waiting.png?raw=true "Waiting for payment")
+![Confirmations](/demo/confirmations.png?raw=true "Confirmations")
 
 ### Dependencies and libraries used
 
