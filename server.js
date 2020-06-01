@@ -1,5 +1,6 @@
 require("monero-javascript");
 require('dotenv').config()
+var escape = require('escape-html');
 var qrcode = require("qrcode-generator");
 var express = require("express");
 const bodyParser = require("body-parser");
@@ -74,8 +75,8 @@ async function mainFunction() {
   app.post(
     "/payment",
     async function (req, res, next) {
-      name = req.body.name;
-      message = req.body.message;
+      name = escape(req.body.name);
+      message = escape(req.body.message);
 
       subaddress = await generateNewSubaddress(name + " - " + message);
 
@@ -153,4 +154,3 @@ async function mainFunction() {
     }
   );
 }
-
