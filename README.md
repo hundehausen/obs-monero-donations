@@ -6,6 +6,12 @@ Accept Monero donations in your OBS live stream. No third parties involved. Your
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Try first on testnet, before using the mainnet.
 
+### Demo
+
+![Alt text](/demo/user_input.png?raw=true "User Input")
+![Alt text](/demo/waiting.png?raw=true "Waiting")
+![Alt text](/demo/confirmations.png?raw=true "Confirmations")
+
 ### Dependencies and libraries used
 
 * monero-javascript
