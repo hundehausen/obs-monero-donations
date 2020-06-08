@@ -66,7 +66,7 @@ cp .env.example .env
     ```
 5. node server.js
 6. now visit http://localhost:3000 to see your donation page, which you should expose to the internet
-7. visit http://localhost:4000/animate to see the animation canvas, that you add to Streamlabs OBS under browser source as input
+7. visit http://localhost:4000/animation to see the animation canvas, that you add to Streamlabs OBS under browser source as input
 
 ## Known bugs
 
