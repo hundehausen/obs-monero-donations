@@ -8,8 +8,8 @@
     "dotenv": "^8.2.0",
     "escape-html": "^1.0.3",
     "express": "^4.17.1",
-    "monero-javascript": "^0.2.14",
-    "pug": "^2.0.4",
+    "monero-javascript": "^0.3.0",
+    "pug": "^3.0.0",
     "qrcode-generator": "^1.4.4",
     "socket.io": "^2.3.0"
   },
