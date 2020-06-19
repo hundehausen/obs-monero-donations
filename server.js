@@ -28,12 +28,12 @@ async function mainFunction() {
   );
 
   // open a wallet on the server
-  await walletRpc.openWallet("testwallet", "abc");
+  await walletRpc.openWallet(process.env.WALLET_NAME, process.env.WALLET_PASSWORD);
   let primaryAddress = await walletRpc.getPrimaryAddress();
   let balance = await walletRpc.getBalance();
   console.log("Wallet:", process.env.WALLET_NAME);
   console.log("Primary address:", primaryAddress);
-  console.log("Balance:" + (balance / Math.pow(10, 12)) + " XMR");
+  console.log("Balance:", (balance / Math.pow(10, 12)) + " XMR");
 
   async function generateNewSubaddress(label) {
     let subaddress = await walletRpc.createSubaddress(0, label);

@@ -27,6 +27,7 @@
 
 .fab, .fas {
   font-size: 5rem;
+  margin-right: 1rem;
 }
 
 .container {
@@ -39,6 +40,10 @@
 
 .fa-monero {
   color: #ff6600;
+}
+
+.fa-github {
+  color: #d2d3d4;
 }
 
 .fa-twitch {
