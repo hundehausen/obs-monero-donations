@@ -1,4 +1,4 @@
-# Monero Twitch
+# OBS Monero Donation integration
 
 Accept Monero donations in your OBS live stream. No third parties involved. Your wallet, your webserver, your stream.
 
