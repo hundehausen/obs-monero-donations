@@ -2,6 +2,11 @@
 
 Accept Monero donations in your OBS live stream. No third parties involved. Your wallet, your webserver, your stream.
 
+## New project: TipXMR
+
+OBS Monero Donation integration was a first try to prove, that monero is a usable currency and can be used to accept donations in a livestream.
+A new community project called ![TipXMR](https://github.com/hundehausen/tipxmr) has evolved, that will focus on making it very easy for beginners to accept donations in their livestream. Go and check it out!
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Try first on testnet, before using the mainnet.
