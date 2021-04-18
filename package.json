@@ -13,13 +13,9 @@
     "qrcode-generator": "^1.4.4",
     "socket.io": "^4.0.1"
   },
-  "devDependencies": {
-    "minimist": "^1.2.5"
-  },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js",
-    "preinstall": "npx npm-force-resolutions"
+    "start": "node server.js"
   },
   "resolutions": {
     "minimist": "^1.2.5"
