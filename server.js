@@ -1,27 +1,27 @@
-require("monero-javascript");
 require('dotenv').config()
-var escape = require('escape-html');
-var qrcode = require("qrcode-generator");
-var express = require("express");
+const monerojs = require("monero-javascript");
+const escape = require('escape-html');
+const qrcode = require("qrcode-generator");
+const express = require("express");
 const bodyParser = require("body-parser");
-var app = express();
-var admin_app = express();
+const app = express();
+const admin_app = express();
 
 app.set("view engine", "pug");
 admin_app.set("view engine", "pug");
-var server = require("http").createServer(app);
-var admin_server = require("http").createServer(admin_app);
-var io = require('socket.io')(server);
-var io2 = require('socket.io')(admin_server);
+let server = require("http").createServer(app);
+let admin_server = require("http").createServer(admin_app);
+let io = require('socket.io')(server);
+let io2 = require('socket.io')(admin_server);
 
-var name, message, subaddress, amount;
+let name, message, subaddress, amount;
 
 mainFunction();
 
 async function mainFunction() {
 
   // connect to a monero-wallet-rpc endpoint with authentication
-  let walletRpc = new MoneroWalletRpc(
+  let walletRpc = await monerojs.connectToWalletRpc(
     process.env.MONERO_WALLET_RPC_URI,
     process.env.MONERO_WALLET_RPC_USER,
     process.env.MONERO_WALLET_RPC_PASSWORD
@@ -33,7 +33,7 @@ async function mainFunction() {
   let balance = await walletRpc.getBalance();
   console.log("Wallet:", process.env.WALLET_NAME);
   console.log("Primary address:", primaryAddress);
-  console.log("Balance:", (balance / Math.pow(10, 12)) + " XMR");
+  console.log(`Balance: ${(balance / Math.pow(10, 12))} XMR`);
 
   async function generateNewSubaddress(label) {
     let subaddress = await walletRpc.createSubaddress(0, label);
@@ -81,9 +81,9 @@ async function mainFunction() {
       subaddress = await generateNewSubaddress(name + " - " + message);
 
       // QR Code generieren
-      var typeNumber = 0;
-      var errorCorrectionLevel = "L";
-      var qr = qrcode(typeNumber, errorCorrectionLevel);
+      let typeNumber = 0;
+      let errorCorrectionLevel = "L";
+      let qr = qrcode(typeNumber, errorCorrectionLevel);
       qr.addData(await subaddress);
       await qr.make();
       let qrcodeURL = await qr.createDataURL(6);
@@ -95,14 +95,14 @@ async function mainFunction() {
         message: message,
       });
 
-      var checkForPayment = setInterval(
+      let checkForPayment = setInterval(
         async () => {
           let payments = await walletRpc.getTransfers({
             IsIncoming: true,
             address: subaddress,
           });
 
-          for (var payment of payments) {
+          for (let payment of payments) {
             if (payment.state.address == subaddress) {
               amount = await payment.state.amount;
               console.log(
@@ -129,17 +129,17 @@ async function mainFunction() {
       io2.emit('new_donation', (amount / Math.pow(10, 12)), name, message);
 
       // Confirmations
-      var confirmations_old = 0;
-      var checkConfirmations = setInterval(
+      let confirmations_old = 0;
+      let checkConfirmations = setInterval(
         async () => {
           let payments = await walletRpc.getTransfers({
             IsIncoming: true,
             address: subaddress,
           });
 
-          for (var payment of payments) {
+          for (let payment of payments) {
             if (payment.state.address == subaddress) {
-              var confirmations_new = await payment.state.tx.state.numConfirmations;
+              let confirmations_new = await payment.state.tx.state.numConfirmations;
               if (confirmations_new > confirmations_old) {
                 confirmations_old = confirmations_new;
                 console.log('New confirmation:', confirmations_new);
