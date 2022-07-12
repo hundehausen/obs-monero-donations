@@ -5,7 +5,7 @@ Accept Monero donations in your OBS live stream. No third parties involved. Your
 ## New project: TipXMR
 
 OBS Monero Donation integration was a first try to prove, that monero is a usable currency and can be used to accept donations in a livestream.
-A new community project called ![TipXMR](https://github.com/hundehausen/tipxmr) has evolved, that will focus on making it very easy for beginners to accept donations in their livestream. Go and check it out!
+A new community project called ![TipXMR](https://github.com/tipxmr/tipxmr) has evolved, that will focus on making it very easy for beginners to accept donations in their livestream. Go and check it out!
 
 ## Getting Started
 
@@ -61,7 +61,7 @@ cp .env.example .env
    ```
    STREAMER_NAME=hundehausen
    PLATFORM=twitch // choose between twitch and youtube
-   PORT_WEBSERVER=3000
+   PORT_WEBSERVER=3001
    PORT_ADMINSERVER=4000
    WALLET_NAME=testwallet
    WALLET_PASSWORD=abc
@@ -70,7 +70,7 @@ cp .env.example .env
    MONERO_WALLET_RPC_PASSWORD=abc
    ```
 5. node server.js
-6. now visit http://localhost:3000 to see your donation page, which you should expose to the internet
+6. now visit http://localhost:3001 to see your donation page, which you should expose to the internet
 7. visit http://localhost:4000/animation to see the animation canvas, that you add to Streamlabs OBS under browser source as input
 
 ## Known bugs
