@@ -13,8 +13,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 adminApp.set("view engine", "pug");
 const server = require("http").createServer(app);
 const adminServer = require("http").createServer(adminApp);
-const io = require("socket.io")(server);
-const io2 = require("socket.io")(adminServer);
+const io = require("socket.io")(server, {
+  pingInterval: 2500,
+});
+const io2 = require("socket.io")(adminServer, {
+  pingInterval: 2500,
+});
 let name, message, subaddress, amount;
 
 async function mainFunction() {

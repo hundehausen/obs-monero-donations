@@ -1,5 +1,5 @@
 $(function () {
-  var socket = io("https://donate.moneromumble.de");
+  const socket = io("http://localhost:3001");
   socket.on("payment_recieved", (amount, name) => {
     console.log("Payment recieved");
     $("#payment-processing").css("display", "none");
