@@ -109,10 +109,7 @@ async function mainFunction() {
             if (payment.state.address == subaddress) {
               amount = payment.state.amount;
               console.log(
-                "Transaction incoming: " +
-                  (await amount) / Math.pow(10, 12) +
-                  " XMR from: " +
-                  subaddress
+                `Transaction incoming: ${(await amount) / Math.pow(10, 12)} XMR from: ${subaddress}`
               );
               clearInterval(checkForPayment);
               next();

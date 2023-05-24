@@ -5,10 +5,10 @@ $(function () {
     $("#payment-processing").css("display", "none");
     $(".payment-recieved").css("display", "flex");
     $("#confirmation").text(
-      "Thank you for your donation of " + amount + " XMR, " + name + "!"
+      `Thank you for your donation of ${amount} XMR, ${name}!`
     );
   });
   socket.on("confirmations", (confirmations) => {
-    $("#confirmations").text(confirmations + "/10 confirmations");
+    $("#confirmations").text(`${confirmations}/10 confirmations`);
   });
 });
