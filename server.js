@@ -128,7 +128,7 @@ async function mainFunction() {
       io2.emit("new_donation", amount / Math.pow(10, 12), name, message);
 
       // Confirmations
-      let confirmations_old = 0;
+      let oldConfirmations = 0;
       const checkConfirmations = setInterval(
         async () => {
           const payments = await walletRpc.getTransfers({
@@ -138,12 +138,12 @@ async function mainFunction() {
 
           for (const payment of payments) {
             if (payment.state.address == subaddress) {
-              const confirmations_new = await payment.state.tx.state
+              const newConfirmations = await payment.state.tx.state
                 .numConfirmations;
-              if (confirmations_new > confirmations_old) {
-                confirmations_old = confirmations_new;
-                console.log("New confirmation:", confirmations_new);
-                io.emit("confirmations", confirmations_new);
+              if (newConfirmations > oldConfirmations) {
+                oldConfirmations = newConfirmations;
+                console.log("New confirmation:", newConfirmations);
+                io.emit("confirmations", newConfirmations);
               }
             }
           }
